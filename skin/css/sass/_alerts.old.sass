@@ -1,3 +1,8 @@
+$mainRed: rgb(201, 76, 76)
+$mainRedHover: rgb(187, 70, 70)
+$mainBlue: rgb(56, 125, 182)
+$mainBlueHover: rgb(53, 118, 172)
+$green: rgb(64, 152, 91)
 
 // Messages - Alerts
 //========================
@@ -5,7 +10,7 @@
 // Alert OK
 //----------------------------
 .alertok
-	background-color: rgba($alertok, 0.9)
+	background-color: rgb(49, 154, 187)
 	font-weight: bold
 	border: 0
 	border-radius: 0px
@@ -17,7 +22,7 @@
 // Alert Error
 //----------------------------
 .alerterror
-	background-color: $alerterror
+	background-color: $mainRed
 	border: 0
 	border-radius: 0px
 	color: #fff
@@ -28,7 +33,7 @@
 // Alert Advice
 //----------------------------
 .alertadvice
-	background-color: $alertadvice
+	background-color: $green
 	border: 0
 	border-radius: 0px
 	color: #fff
@@ -205,17 +210,17 @@
 	top: 1px
 	outline: none
 .alertify-button-cancel
-	background-color: $mainred
+	background-color: $mainRed
 	&:hover
-		background-color: $mainredHover
+		background-color: $mainRedHover
 		text-decoration: none
 		-webkit-box-shadow: 2px 2px 5px -10px rgba(0,0,0,0.77)
 		-moz-box-shadow: 2px 2px 5px -10px rgba(0,0,0,0.77)
 		box-shadow: 2px 2px 5px -10px rgba(0,0,0,0.77)
 .alertify-button-ok
-	background-color: $mainblue
+	background-color: $mainBlue
 	&:hover
-		background-color: $mainblueHover
+		background-color: $mainBlueHover
 		text-decoration: none
 		-webkit-box-shadow: 2px 2px 5px -10px rgba(0,0,0,0.77)
 		-moz-box-shadow: 2px 2px 5px -10px rgba(0,0,0,0.77)
@@ -251,7 +256,7 @@
 		font-size: 50px
 
 .alert-success
-	background-color: $alertGreen
+	background-color: $green
 .alert-info
 	background-color: rgba(205, 205, 205, 1)
 	color: #000
