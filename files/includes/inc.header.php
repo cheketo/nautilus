@@ -4,9 +4,9 @@
   <!-- Logo -->
   <a href="../main/main.php" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><b>R</b>VT</span>
+    <span class="logo-mini"><b>N</b>TL<!-- <img src="../../../skin/images/body/pictures/logo-mini.png" style="max-height:100%;max-width:100%;">--></span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>Re</b>novatio</span>
+    <span class="logo-lg"><b>Nau</b>tilus</span>
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
@@ -19,8 +19,8 @@
         <!-- Notifications: style can be found in dropdown.less -->
         <li class="dropdown notifications-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-bell-o"></i>
-            <span class="label label-warning">10</span>
+            <i class="fa fa-comment"></i>
+            <span class="label label-success">10</span>
           </a>
           <ul class="dropdown-menu">
             <li class="header">Ten&eacute;s 10 notificaciones</li>
@@ -29,7 +29,7 @@
               <ul class="menu">
                 <li>
                   <a href="#">
-                    <i class="fa fa-users text-aqua"></i> 5 nuevos usuarios creados hoy
+                    <i class="fa fa-question text-red"></i> Se hizo una pregunta en el producto "Caja de herramientas"
                   </a>
                 </li>
               </ul>
@@ -37,27 +37,30 @@
             <li class="footer"><a href="#">Ver todas las alertas</a></li>
           </ul>
         </li>
-
+        
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="<?php echo $Admin->Img; ?>" class="user-image" alt="User Image">
-            <span class="hidden-xs" id="userfullname"><?php echo $Admin->FullName; ?></span>
+            <?php
+              $Logo = !$_SESSION['logo']? "../../../skin/images/users/default/default.jpg" : $_SESSION['logo'];
+            ?>
+            <img src="<?php echo $Logo; ?>" class="user-image" alt="User Image">
+            <span class="hidden-xs" id="userfullname"><?php echo $_SESSION['nickname']; ?></span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
-              <img src="<?php echo $Admin->Img; ?>" class="img-circle" alt="User Image">
+              <img src="<?php echo $Logo; ?>" class="img-circle" alt="User Image">
               <p>
-                <?php echo $Admin->FullUserName; ?>
-                <small><?php echo ucfirst($Admin->ProfileName); ?></small>
+                <?php echo $_SESSION['nickname']; ?>
+                <small><?php echo $_SESSION['nickname']; ?></small>
               </p>
             </li>
 
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="#" class="btn btn-primary btn-flat">Perfil</a>
+                <a href="#" class="btn btn-primary btn-flat">Mi Perfil</a>
               </div>
               <div class="pull-right">
                 <a href="../login/process.logout.php" class="btn btn-danger btn-flat">Cerrar Sesi&oacute;n</a>
@@ -66,9 +69,9 @@
           </ul>
         </li>
         <!-- Control Sidebar Toggle Button -->
-        <li>
-          <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-        </li>
+        <!--<li>-->
+        <!--  <a href="../login/process.logout.php" class="btn btn-danger"><span class="fa fa-power-off"></span></a>-->
+        <!--</li>-->
       </ul>
     </div>
   </nav>

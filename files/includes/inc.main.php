@@ -1,5 +1,5 @@
 <?php
-	session_name("renovatio");
+	session_name("nautilus");
 	session_cache_expire(15800);
 	session_start();
 
@@ -20,29 +20,19 @@
 	include_dir("../../classes");
 
 	/* MELI REDIRECT URL */
-	$MeliURL = 'https://renovatio-cheketo.c9users.io/files/modules/test/landing.php';
+	$MeliURL = 'https://nautilus-cheketo.c9users.io/files/modules/login/process.login.php';
 	/* MELI NOTIFICATIONS URL */
-	$MeliNotificationsURL = 'https://renovatio-cheketo.c9users.io/files/modules/test/notifications.php';
+	$MeliNotificationsURL = 'https://nautilus-cheketo.c9users.io/files/modules/main/process.meli.notifications.php';
 	
-	/* SECURIRTY CHECKS */
-	$Security		= new Security();
-	if($Security->checkProfile($_SESSION['admin_id']))
+	$_SESSION['meli_application_id']	= 1153986830050189;
+	$_SESSION['meli_secret']			= "KNQNPi2CfAevSwn8tJD7PXou4Y4TFyHN";
+	
+	if($_SESSION['meli'])
 	{
-		$Admin 		= new AdminData();
-		$Cookies 	= new Login($Admin->User);
-		$Cookies->setCookies();
-		if(!$Security->checkCustomer($_SESSION['customer_id']))
+		$Meli = new Meli($_SESSION['meli_application_id'],$_SESSION['meli_secret'],$_SESSION['meli_access_token'],$_SESSION['meli_refresh_token']);
+		if($_SESSION['meli_refresh_token'])
 		{
-			header("Location: ../login/process.logout.php?error=customer");
-			die();
-		}
-		if($_SESSION['meli'])
-		{
-			$Meli = new Meli($_SESSION['meli_application_id'],$_SESSION['meli_secret'],$_SESSION['meli_access_token'],$_SESSION['meli_refresh_token']);
-			if($_SESSION['meli_refresh_token'])
-			{
-				$Meli->refreshMeliToken();
-			}
+			$Meli->refreshMeliToken();
 		}
 	}
 

@@ -194,7 +194,7 @@ function change_skin(cls) {
 
   $("body").addClass(cls);
   storeLocal('skin', cls);
-  setCookie('renovatio-skin', cls, 365);
+  setCookie('nautilus-skin', cls, 365);
   return false;
 }
 
@@ -327,175 +327,6 @@ $(function(){
     });
 });
 
-
-
-
-
-$(function(){
-
-    //////////////////////////////////////////////////// Pager /////////////////////////////////////////////////////////////////
-    function fillPagerDestiny(parent,page)
-    {
-        var pagerid         = parent.attr("id");
-        var string          = 'page='+ page +'&action=pager&pagerid='+pagerid;
-        var process         = parent.attr("process");
-        var destiny         = parent.attr("destiny");
-        var activeclass     = parent.attr("activeclass");
-        var inactiveclass   = parent.attr("inactiveclass");
-        var totalpages      = parent.attr("totalpages");
-
-        $.ajax({
-            type: "POST",
-            url: process,
-            data: string,
-            cache: false,
-            success: function(data){
-                $("#"+destiny).html(data);
-                $("#"+pagerid+" .ActivePage").each(function(){
-                    $(this).removeClass(activeclass);
-                    $(this).addClass(inactiveclass);
-                });
-                $("#"+pagerid+" #page"+page).removeClass(inactiveclass);
-                $("#"+pagerid+" #page"+page).addClass(activeclass);
-                $("#BtnFoward"+pagerid).attr("page",parseInt(page)+1);
-                $("#BtnBack"+pagerid).attr("page",parseInt(page)-1);
-
-                switch(page)
-                {
-                    case "1":
-                        $("#BtnBack"+pagerid).removeClass($("#BtnBack"+pagerid).attr("classon"));
-                        $("#BtnBack"+pagerid).addClass($("#BtnBack"+pagerid).attr("classoff"));
-                        $("#BtnFoward"+pagerid).removeClass($("#BtnFoward"+pagerid).attr("classoff"));
-                        $("#BtnFoward"+pagerid).addClass($("#BtnFoward"+pagerid).attr("classon"));
-                    break;
-
-                    case totalpages:
-                        $("#BtnFoward"+pagerid).removeClass($("#BtnFoward"+pagerid).attr("classon"));
-                        $("#BtnFoward"+pagerid).addClass($("#BtnFoward"+pagerid).attr("classoff"));
-                        $("#BtnBack"+pagerid).addClass($("#BtnBack"+pagerid).attr("classon"));
-                        $("#BtnBack"+pagerid).removeClass($("#BtnBack"+pagerid).attr("classoff"));
-                    break;
-
-                    default:
-                        $("#BtnFoward"+pagerid).addClass($("#BtnFoward"+pagerid).attr("classon"));
-                        $("#BtnFoward"+pagerid).removeClass($("#BtnFoward"+pagerid).attr("classoff"));
-                        $("#BtnBack"+pagerid).addClass($("#BtnBack"+pagerid).attr("classon"));
-                        $("#BtnBack"+pagerid).removeClass($("#BtnBack"+pagerid).attr("classoff"));
-                    break;
-                }
-                ///// LIST ACTIONS ////
-                $("img").click(function(){
-                    var info    = $(this).attr("id").split('_');
-                    var action  = $(this).attr("action");
-                    var process = $(this).attr("process");
-                    var target  = $(this).attr("target");
-                    var id      = info[1];
-                    listActions(action,id,process,target);
-                });
-            }
-        });
-
-    }
-
-    $(".ActivePageLink").click(function(){
-        fillPagerDestiny($(this).parent(),$(this).attr("page"));
-    });
-
-    $(".BtnFoward,.BtnBack").click(function(){
-        var arrayid;
-        var pagerid;
-        var buttonclass;
-        if($(this).hasClass("BtnFoward"))
-            buttonclass = "Foward";
-        else
-            buttonclass = "Back";
-        arrayid         = $(this).attr("id").split(buttonclass);
-        pagerid         = arrayid[1];
-        $("#"+pagerid+" #page"+$(this).attr("page")).click();
-    });
-
-
-    function changePagerView(selectPager)
-    {
-        var pagerid         = selectPager.attr("parentid");
-        var parent          = $("#"+pagerid);
-        var string          = 'regs='+ selectPager.val() +'&action=changepagerview&pagerid='+pagerid;
-        var process         = parent.attr("process");
-
-        $.ajax({
-            type: "POST",
-            url: process,
-            data: string,
-            cache: false,
-            success: function(data){
-                //alert(data);
-                fillPagerDestiny(parent,"1");
-                if(data=="erase")
-                {
-                    parent.hide();
-                    $("#BtnFoward"+pagerid).addClass("Hidden");
-                    $("#BtnBack"+pagerid).addClass("Hidden");
-
-                }else{
-                    parent.addClass("MustBeRemoved");
-                    parent.after(data);
-                    $(".MustBeRemoved").remove();
-                    $("#BtnFoward"+pagerid).removeClass("Hidden");
-                    $("#BtnBack"+pagerid).removeClass("Hidden");
-                }
-
-                $(".ActivePageLink").click(function(){
-                    fillPagerDestiny($(this).parent(),$(this).attr("page"));
-                });
-            }
-        });
-    }
-
-    $(".RegsPerPage").change(function(){
-        changePagerView($(this));
-    });
-
-
-//////////////////////////////////////////////////// Searcher /////////////////////////////////////////////////////////////////
-
-
-    function startSearch(field)
-    {
-        var parent  = field.parent().parent().parent();
-        var value   = field.val();
-        var fieldid = field.attr("id");
-        var process = parent.attr("process");
-        var pagerid = parent.attr("pagerid");
-        var string  = "action=searcher&pagerid="+ pagerid + "&field=" + fieldid + "&value=" + value;
-
-        $.ajax({
-            type: "POST",
-            url: process,
-            data: string,
-            cache: false,
-            success: function(data){
-                if(!data)
-                {
-                    changePagerView($("#select"+pagerid+" #regsperpage"));
-                }else{
-                    alert(data);
-                }
-            }
-        });
-    }
-
-    $(".StartSearch").keyup(function(){
-        startSearch($(this));
-    });
-
-    $(".StartSearch").change(function(){
-        startSearch($(this));
-    });
-
-
-
-});
-
 //////////////////////////////////////////////////// Validation ///////////////////////////////////////////////////////////////
 var validate    = new ValidateFields();
 
@@ -513,8 +344,8 @@ $(function(){
 
         $("#Logout").click(function(){
 
-            // alertify.confirm(utf8_decode("¿Desea salir del administrador?"), function(e){
-            //     if(e){
+            alertify.confirm(utf8_decode("¿Desea salir del administrador?"), function(e){
+                 if(e){
                     var target      = '../login/login.php';
                     var process     = '../login/process.logout.php';
 
@@ -526,8 +357,8 @@ $(function(){
                             document.location = target;
                         }
                     });
-            //     }
-            // }).set('labels', {ok:'Si', cancel:'No'});
+                 }
+             }).set('labels', {ok:'Si', cancel:'No'});
         });
 
 });

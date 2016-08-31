@@ -374,4 +374,28 @@
 		return file_exists($New);
 	}
 	
+	function RequestQuestions($Offset=0)
+	{
+		$DB = new DataBase();
+		$DB->Connect();
+		$Meli	= new Meli($_SESSION['meli_application_id'],$_SESSION['meli_secret'],$_SESSION['meli_access_token'],$_SESSION['meli_refresh_token']);
+		$Result = $Meli->get('questions/search?seller_id='.$_SESSION['id'].'&offset=0&status=unanswered&access_token='.$_SESSION['meli_access_token'].'');
+		$Questions  = $Result['body']->questions;
+		$QuestionsTotal = $Result['body']->total;
+		$QuestionsLimit = $Result['body']->limt;
+		foreach($Questions as $Question)
+		{
+			$MLDate			= explode(".",$Question->date_created);
+			$DateCreated	= str_replace("T"," ",$MLDate[0]);
+			$Fields			= $Question->id.",".$_SESSION['id'].",".$Question->from->id.",'".$Question->item_id."','".$Question->status."','".$Question->text."','".$DateCreated."'";
+			$Query			.= $Query? "),(".$Fields : $Fields;
+		}
+		$DB->execQuery("INSERT","question",'question_id,seller_id,user_id,item_id,status,text,date_created',$Query);
+		if($QuestionTotal>$QuestionsLimit)
+		{
+			$Offset += $QuestionsLimit;
+			RequestQuestions($Offset);
+		}
+	}
+	
 ?>
